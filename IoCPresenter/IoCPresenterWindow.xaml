@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="IoC Services Viewer" Height="450" Width="800">
+        Title="IoC Services Viewer" Height="600" Width="1200">
 
     <Window.Resources>
         <Style x:Key="HeaderStyle" TargetType="TextBlock">
@@ -16,16 +16,21 @@
 
     <Grid Background="WhiteSmoke">
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition/>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
         <TextBlock Text="Loaded Services:" Style="{StaticResource HeaderStyle}" Margin="10"/>
 
-        <CheckBox x:Name="ExcludeSystemServicesCheckBox" Grid.Row="1" Content="Exclude system services" Margin="10" Checked="ExcludeSystemServicesCheckBox_Checked" Unchecked="ExcludeSystemServicesCheckBox_Unchecked"/>
-        
-        <ListView x:Name="ServicesListView" Grid.Row="2" Margin="10">
+        <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="10">
+            <CheckBox x:Name="ExcludeSystemServicesCheckBox" Content="Exclude system services" Checked="ExcludeSystemServicesCheckBox_Checked" Unchecked="ExcludeSystemServicesCheckBox_Unchecked"/>
+            <TextBlock Text="Search:" Margin="10,0,5,0"/>
+            <TextBox x:Name="SearchTextBox" Width="200" TextChanged="SearchTextBox_TextChanged"/>
+        </StackPanel>
+
+        <ListView x:Name="ServicesListView" Grid.Row="2" Margin="10" SelectionChanged="ServicesListView_SelectionChanged">
             <ListView.Resources>
                 <Style TargetType="{x:Type GridViewColumnHeader}">
                     <Setter Property="Background" Value="DarkSlateBlue"/>
@@ -55,5 +60,11 @@
                 </GridView>
             </ListView.View>
         </ListView>
+
+        <Expander Grid.Row="3" Header="Selected Service Details" Margin="10">
+            <Grid x:Name="SelectedServiceDetailsGrid" Margin="5">
+                <!-- Details grid content will be added in code-behind -->
+            </Grid>
+        </Expander>
     </Grid>
 </Window>
