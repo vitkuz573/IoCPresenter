@@ -5,15 +5,46 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
         Title="IoC Services Viewer" Height="450" Width="800">
-    <Grid>
+
+    <Window.Resources>
+        <Style x:Key="HeaderStyle" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="24"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Foreground" Value="DarkSlateBlue"/>
+        </Style>
+    </Window.Resources>
+
+    <Grid Background="WhiteSmoke">
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
 
-        <TextBlock Text="Loaded Services:" FontWeight="Bold" Margin="10"/>
+        <TextBlock Text="Loaded Services:" Style="{StaticResource HeaderStyle}" Margin="10"/>
 
-        <ListView x:Name="ServicesListView" Grid.Row="1" Margin="10">
+        <CheckBox x:Name="ExcludeSystemServicesCheckBox" Grid.Row="1" Content="Exclude system services" Margin="10" Checked="ExcludeSystemServicesCheckBox_Checked" Unchecked="ExcludeSystemServicesCheckBox_Unchecked"/>
+        
+        <ListView x:Name="ServicesListView" Grid.Row="2" Margin="10">
+            <ListView.Resources>
+                <Style TargetType="{x:Type GridViewColumnHeader}">
+                    <Setter Property="Background" Value="DarkSlateBlue"/>
+                    <Setter Property="Foreground" Value="White"/>
+                    <Setter Property="Padding" Value="5"/>
+                    <Setter Property="FontWeight" Value="Bold"/>
+                </Style>
+                <Style TargetType="{x:Type ListViewItem}">
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                    <Setter Property="Margin" Value="2"/>
+                    <Setter Property="Padding" Value="5"/>
+                    <Style.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="LightSteelBlue"/>
+                            <Setter Property="Foreground" Value="White"/>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </ListView.Resources>
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Name" Width="250" DisplayMemberBinding="{Binding Name}"/>
